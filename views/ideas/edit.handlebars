@@ -1,7 +1,7 @@
 
 <div class="card card-body">
   <h3>Edit Video Idea</h3>
-  <form action="/ideas" method="post">
+  <form action="/ideas/{{idea._id}}?_method=PUT" method="post">
     <div class="form-group">
       <label for="title">Title</label>
       {{#if errors}} {{#unless title}}

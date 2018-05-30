@@ -5,7 +5,35 @@
     <span>
       <a href="/ideas/edit/{{_id}}" class="badge badge-secondary">Edit</a>
     </span>
+      <span>
+        <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#deleteModal">Delete</a>
+    </span>
   </div>
+
+  <!--Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to delete this idea?</p>
+        <small>it cannot be recovered.</small>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="/ideas/{{_id}}?_method=DELETE" method="post">
+          <button type="submit" class="btn btn-primary">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 {{else}}
   <p>No video ideas listed</p>
 {{/each}}
