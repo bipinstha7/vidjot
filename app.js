@@ -48,12 +48,23 @@ app.get("/ideas", (req, res) => {
 		.sort({date:"desc"})
 		.then(ideas => {
 			res.render('ideas/index',{ideas:ideas});
+			console.log(ideas);
 		})
+		.catch(err => console.log("get: /ideas-", err));
 });
 
 // add idea form
 app.get("/ideas/add", (req, res) => {
 	res.render("ideas/add");
+});
+
+// edit idea form
+app.get("/ideas/edit/:id", (req, res) => {
+	Idea.findById(req.params.id)
+		.then(idea => {
+			res.render("ideas/edit", {idea: idea});
+		})
+		.catch(error => console.log("get: /ideas/edit/:id", err));
 });
 
 // process form 
