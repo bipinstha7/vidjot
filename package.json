@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/bipinstha7/vidjot#readme",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^5.1.3"
   }
 }
