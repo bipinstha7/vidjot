@@ -12,7 +12,6 @@ module.exports = function(passport) {
       // here used to access flash message
       passReqToCallback: true
     }, (req, email, password, done) => {
-      // match user
       User.findOne({email: email})
         .then(user => {
           if(!user) {
