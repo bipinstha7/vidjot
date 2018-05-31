@@ -1,5 +1,10 @@
 const express = require("express");
+const bcrypt = require("bcryptjs");
+// const passport = require("passport");
 const router = express.Router();
+
+// load user model
+const User = require("../models/User");
 
 // user login route
 router.get("/users/login", (req, res) => {
@@ -19,7 +24,7 @@ router.post("/users/register", (req, res) => {
     errors.push({text: "Password do not match"});
   }
 
-  if(req.body.password.length < 10) {
+  if(req.body.password.length < 5) {
     errors.push({text: "Password must be at least 10 characters"});
   }
 
@@ -32,7 +37,36 @@ router.post("/users/register", (req, res) => {
       password2: req.body.password2
     });
   } else {
-    res.send("success register");
+    User.findOne({email: req.body.email})
+      .then(user => {
+        if(user) {
+          req.flash("error_msg","Email already registered");
+          res.redirect("/users/register");
+        } else {
+            const newUser = {
+              name: req.body.name,
+              email: req.body.email,
+              password: req.body.password,
+            }
+            bcrypt.genSalt(10, (err, salt) => {
+              bcrypt.hash(newUser.password, salt, (err, hash) =>{
+                if(err) throw error;
+                newUser.password = hash;
+                
+                User.create(newUser)
+                  .then(user => {
+                    req.flash("success_msg", "You are now registerd and can log in");
+                    res.redirect("/users/login");
+                    console.log(newUser.password);
+                  })
+                  .catch(err => {
+                    res.status(500).send(err);
+                    console.log("POST: /users/register-", err);
+                  });
+              });
+            }); 
+          }
+      });
   }
 });
 
