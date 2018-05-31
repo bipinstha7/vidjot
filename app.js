@@ -39,9 +39,9 @@ app.use(methodOverride("_method"));
 
 // express-session middleware
 app.use(session({
-  secret: 'secret session',
-  resave: true,
-  saveUninitialized: true
+	secret: 'secret session',
+	resave: true,
+	saveUninitialized: true
 }))
 
 // passport middleware
@@ -62,7 +62,7 @@ app.use((req, res, next) => {
 });
 
 // static folder
-app.use(express.static(__dirname + "/public")); 
+app.use(express.static(__dirname + "/public"));
 
 //**********************************************
 // 	 MIDDLEWARES end
