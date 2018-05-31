@@ -4,9 +4,12 @@ const router = express.Router();
 // load Idea model
 const Idea = require("../models/Idea");
 
+// load authentication helper
+const {ensureAuthenticated} = require("../helpers/auth");
+
 // idea index page
-router.get("/ideas", (req, res) => {
-	Idea.find({})
+router.get("/ideas", ensureAuthenticated,  (req, res) => {
+	Idea.find({user: req.user._id})
 		.sort({ date: "desc" })
 		.then(ideas => {
 			res.render('ideas/index', { ideas: ideas });
@@ -17,13 +20,13 @@ router.get("/ideas", (req, res) => {
 		});
 });
 
-// add idea form
-router.get("/ideas/add", (req, res) => {
+// add idex form
+router.get("/ideas/add", ensureAuthenticated, (req, res) => {
 	res.render("ideas/add");
 });
 
 // add form process
-router.post("/ideas", (req, res) => {
+router.post("/ideas", ensureAuthenticated, (req, res) => {
 	let errors = [];
 	if (!req.body.title) {
 		errors.push({ textTitle: "Please add a title" });
@@ -40,7 +43,8 @@ router.post("/ideas", (req, res) => {
 	} else {
 		const newIdea = {
 			title: req.body.title,
-			details: req.body.details
+			details: req.body.details,
+			user: req.user._id
 		}
 		Idea.create(newIdea)
 			.then(idea => {
@@ -55,10 +59,15 @@ router.post("/ideas", (req, res) => {
 });
 
 // edit idea form
-router.get("/ideas/edit/:id", (req, res) => {
+router.get("/ideas/edit/:id", ensureAuthenticated, (req, res) => {
 	Idea.findById(req.params.id)
 		.then(idea => {
-			res.render("ideas/edit", { idea: idea }); 
+			if(idea.user != req.user._id) {
+				req.flash("error_msg", "Not authorized");
+				res.redirect("/ideas");
+			} else {
+				res.render("ideas/edit", { idea: idea });
+			} 
 		})
 		.catch(error => {
 			res.status(500).send(err);
@@ -66,7 +75,7 @@ router.get("/ideas/edit/:id", (req, res) => {
 });
 
 // edit form process
-router.put("/ideas/:id", (req, res) => {
+router.put("/ideas/:id", ensureAuthenticated,  (req, res) => {
 	// const updateIdea = {
 	// 	title: req.body.title,
 	// 	details: req.body.details
@@ -83,7 +92,7 @@ router.put("/ideas/:id", (req, res) => {
 });
 
 // delete idea
-router.delete("/ideas/:id", (req, res) => {
+router.delete("/ideas/:id", ensureAuthenticated, (req, res) => {
 	Idea.findByIdAndRemove(req.params.id)
 		.then(() => {
 			req.flash("success_msg", "Video idea removed");
