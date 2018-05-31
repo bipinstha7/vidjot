@@ -6,11 +6,14 @@ const bodyParser = require("body-parser");
 const methodOverride = require("method-override");
 const session = require("express-session");
 const flash = require("connect-flash");
+const passport = require("passport");
 
 // load ideas routes
 const ideas = require("./routes/ideas");
 // load users routes
 const users = require("./routes/users");
+// passport config
+require("./config/passport")(passport);
 
 // connect to mongoose
 mongoose.connect("mongodb://bipin:bipin1@ds241530.mlab.com:41530/vidjot")
@@ -41,6 +44,10 @@ app.use(session({
   saveUninitialized: true
 }))
 
+// passport middleware
+app.use(passport.initialize());
+app.use(passport.session());
+
 // connect-flash middleware
 app.use(flash());
 
@@ -49,6 +56,8 @@ app.use((req, res, next) => {
 	res.locals.success_msg = req.flash("success_msg");
 	res.locals.error_msg = req.flash("error_msg");
 	res.locals.error = req.flash("error");
+	// if user is logged in req.user has data otherwise it is null
+	res.locals.currentUser = req.user || null;
 	next();
 });
 

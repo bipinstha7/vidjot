@@ -22,7 +22,7 @@ router.get("/ideas/add", (req, res) => {
 	res.render("ideas/add");
 });
 
-// process form 
+// add form process
 router.post("/ideas", (req, res) => {
 	let errors = [];
 	if (!req.body.title) {
