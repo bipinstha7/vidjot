@@ -10,14 +10,14 @@
       {{#if errors}} {{#unless title}}
       <div class="alert alert-danger">Please add a title</div>
       {{/unless}} {{/if}}
-      <input type="text" class="form-control" name="title" required value={{title}}>
+      <input type="text" class="form-control" name="title" required value="{{title}}" pattern=".{5,}" title="minimum 5 characters required">
     </div>
     <div class="form-group">
       <label for="title">Details</label>
       {{#if errors}} {{#unless details}}
       <div class="alert alert-danger">please add some details</div>
       {{/unless}} {{/if}}
-      <textarea class="form-control" name="details" required>{{details}}</textarea>
+      <textarea class="form-control" name="details" required minlength="10">{{details}}</textarea>
     </div>
     <button type="submit" class="btn btn-success">Submit</button>
   </form>
