@@ -91,7 +91,7 @@ app.get("/*", (req, res) => {
 	res.status(400).send("404 URL is not recognized");
 });
 
-const port = process.env.port || 3000;
+const port = process.env.PORT || 3000;
 app.listen(port, () => {
 	console.log(`server is running on port: ${port}`);
 });
