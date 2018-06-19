@@ -82,9 +82,11 @@ app.get("/about", (req, res) => {
 
 // use ideas routes
 app.use(ideas);
+// app.use("/ideas",ideas);
 
 // use users routes
 app.use(users);
+// app.use("/users",users);
 
 // handle unknown route
 app.get("/*", (req, res) => {
