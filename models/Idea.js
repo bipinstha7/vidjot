@@ -1,25 +1,25 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
-const Schema = mongoose.Schema;
+const Schema = mongoose.Schema
 
 // create Schema
 const IdeaSchema = new Schema({
-  title: {
-    type: String,
-    required: true
-  },
-  details: {
-    type: String,
-    required: true
-  },
-  user: {
-    type: String,
-    required:true
-  },
-  date: {
-    type: Date,
-    default: Date.now
-  }
-});
+	title: {
+		type: String,
+		required: true
+	},
+	details: {
+		type: String,
+		required: true
+	},
+	user: {
+		type: String,
+		required: true
+	},
+	date: {
+		type: Date,
+		default: Date.now
+	}
+})
 
-module.exports = mongoose.model("Idea", IdeaSchema);
+module.exports = mongoose.model('Idea', IdeaSchema)
