@@ -1,17 +1,18 @@
 {{#each ideas}}
-  <div class="card card-body mb-2">
-    <h4>{{title}}</h4>
-    <p>{{details}}</p>
-    <span>
-      <a href="/ideas/edit/{{_id}}" class="badge badge-secondary">Edit</a>
-    </span>
-      <span>
-        <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#deleteModal">Delete</a>
-    </span>
-  </div>
+<div class="card card-body mb-2">
+  <h4>{{title}}</h4>
+  <p>{{details}}</p>
+  <span>
+    <a href="/ideas/edit/{{_id}}" class="badge badge-secondary">Edit</a>
+  </span>
+  <span>
+    <a href="#" class="badge badge-danger" data-toggle="modal" data-target="#deleteModal">Delete</a>
+  </span>
+</div>
 
-  <!--Delete Modal -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!--Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -35,5 +36,5 @@
 </div>
 
 {{else}}
-  <p>No video ideas listed</p>
+<p>No video ideas listed</p>
 {{/each}}
